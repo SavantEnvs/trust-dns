@@ -1,0 +1,28 @@
+[package]
+name = "trust-dns-mayhem-fuzz"
+version = "0.0.0"
+authors = ["Automatically generated"]
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+# Pin to versions that do NOT require zerocopy 0.8.x (incompatible with nightly-2025-05-14).
+# Workspace Cargo.lock reference: ppv-lite86 0.2.17, once_cell 1.19, url 2.4, ipnet 2.9, idna 0.5.
+hickory-proto = { path = "../../crates/proto", default-features = false }
+url = "=2.4.0"
+ipnet = "=2.9.0"
+ppv-lite86 = "=0.2.17"
+once_cell = "=1.19.0"
+
+[[bin]]
+name = "message"
+path = "fuzz_targets/message.rs"
+test = false
+doc = false
+
+# Exclude this crate from the parent workspace (cargo-fuzz requirement).
+[workspace]
